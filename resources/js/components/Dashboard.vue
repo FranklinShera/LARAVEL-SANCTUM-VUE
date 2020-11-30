@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container"  :class="{ 'loading': this.$store.getters.getLoader }">
         <div class="jumbotron">
             <h1 class="display-5">Hello {{ this.$store.getters.getUser.name }} Welcome On Board!</h1>
             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -20,15 +20,25 @@
         },
         methods:{
             logout(){
+                this.$store.commit('setLoader', true);
                 axios.post('/logout').then(res => {
                     localStorage.removeItem('isLoggedIn')
 
                     localStorage.removeItem('loggedUser')
 
                     this.$store.commit('setLoggedUser', null)
+                    this.$store.commit('setLoader', false);
                     this.$router.push('/user-login')
                 })
             }
         }
     }
 </script>
+
+
+<style>
+    .loading{
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+</style>

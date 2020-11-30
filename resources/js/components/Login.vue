@@ -1,5 +1,5 @@
 <template>
-    <div class="container card p-5">
+    <div class="container card p-5" :class="{ 'loading': this.$store.getters.getLoader }">
         <h2 class="ml-1">Login</h2>
         <form class="m-2" @submit.prevent="login">
             <div class="form-group">
@@ -34,6 +34,8 @@
         },
         methods:{
                login(){
+                   this.$store.commit('setLoader',true);
+
                    axios.get('/sanctum/csrf-cookie').then(response => {
                        axios.post('/login',
                            {
@@ -46,6 +48,7 @@
                                localStorage.setItem('loggedUser',JSON.stringify(ress.data))
 
                                this.$store.commit('setLoggedUser',ress.data)
+                               this.$store.commit('setLoader', false);
                                this.$router.push('/dashboard');
 
                            });
@@ -54,7 +57,8 @@
                        }).catch(err => {
                            if(err){
                                console.log(err)
-                               this.isError = true,
+                               this.isError = true
+                                   this.$store.commit('setLoader', false);
                                this.errors.push(err.message);
                            }
                        });
@@ -69,3 +73,10 @@
         }
     }
 </script>
+
+<style>
+    .loading{
+        color: transparent;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+</style>
