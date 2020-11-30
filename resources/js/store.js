@@ -3,16 +3,21 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const availableUser = localStorage.getItem('loggedUser');
+
 export  default new Vuex.Store({
+
     state: {
-        count: 0
+        loggedUser: (availableUser) ? JSON.parse(availableUser) : null
     },
     getters:{
-
+        getUser(state){
+            return state.loggedUser;
+        }
     },
     mutations: {
-        increment (state) {
-            state.count++
+        setLoggedUser(state,user){
+            state.loggedUser = user;
         }
     },
     actions:{

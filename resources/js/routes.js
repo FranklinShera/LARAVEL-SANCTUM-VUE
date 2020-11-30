@@ -9,15 +9,18 @@ export const routes = [
         component: Welcome
     },
     {
-        path :'/login',
-        component: Login
+        path :'/user-login',
+        component: Login,
+        meta: { requiresGuest: true }
     },
     {
-        path :'/register',
-        component: Register
+        path :'/register-user',
+        component: Register,
+        meta: { requiresGuest: true }
     },
     {
         path :'/dashboard',
-        component: Dashboard
+        component: Dashboard,
+        meta: { requiresAuth: true }
     }
 ]

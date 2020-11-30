@@ -9,8 +9,9 @@
 
 <script>
     export default {
+        name : 'Welcome',
         mounted() {
-            console.log('Component mounted.')
+            console.log('Welcome Component mounted.')
         }
     }
 </script>
